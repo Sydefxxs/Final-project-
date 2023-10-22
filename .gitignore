@@ -1,32 +1,92 @@
-# Prerequisites
-*.d
+#include <iostream>
+#include <string>
+using namespace std;
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+// Function to convert a decimal number to a Roman Numeral
+string decimalToRoman(int number) {
+    if (number < 1 || number > 50) {
+        return "Invalid input";
+    }
 
-# Precompiled Headers
-*.gch
-*.pch
+    const string romanNumerals[] = {
+        "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
+        "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
+        "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX",
+        "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL",
+        "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L"
+    };
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+    return romanNumerals[number - 1];
+}
 
-# Fortran module files
-*.mod
-*.smod
+// Function to convert a decimal number to binary
+string decimalToBinary(int number) {
+    if (number < 0 || number > 50) {
+        return "Invalid input";
+    }
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+    string binary = "";
+    for (int i = 5; i >= 0; i--) {
+        int bit = (number >> i) & 1; // Extract each bit of the number
+        binary += to_string(bit);     // Append the bit to the binary string
+    }
 
-# Executables
-*.exe
-*.out
-*.app
+    return binary;
+}
+
+// Function to convert a decimal number to hexadecimal
+string decimalToHexadecimal(int number) {
+    if (number < 0 || number > 50) {
+        return "Invalid input";
+    }
+
+    string hexadecimal = "0123456789ABCDEF";
+    string hex = "";
+    while (number > 0) {
+        int digit = number % 16;   // Extract the least significant hexadecimal digit
+        hex = hexadecimal[digit] + hex; // Append the digit to the hexadecimal string
+        number /= 16;             // Move to the next digit
+    }
+
+    return hex;
+}
+
+int main() {
+    char choice;
+    int number;
+
+    cout << "***********************************" << endl;
+    cout << "*****    Number Converter    *****" << endl;
+    cout << "***********************************" << endl;
+    cout << "A. Convert Decimal to Roman Numeral" << endl;
+    cout << "B. Convert Decimal to Binary" << endl;
+    cout << "C. Convert Decimal to Hexadecimal" << endl;
+    cout << "Enter your choice: ";
+    cin >> choice;
+    choice = toupper(choice); // Convert the choice to uppercase for case-insensitive comparison
+
+    if (choice == 'A' || choice == 'B' || choice == 'C') {
+        cout << "Enter a number between 0 and 50: ";
+        cin >> number;
+
+        if (number >= 0 && number <= 50) {
+            if (choice == 'A') {
+                cout << "Roman Numeral: " << decimalToRoman(number) << endl;
+            }
+            else if (choice == 'B') {
+                cout << "Binary: " << decimalToBinary(number) << endl;
+            }
+            else if (choice == 'C') {
+                cout << "Hexadecimal: " << decimalToHexadecimal(number) << endl;
+            }
+        }
+        else {
+            cout << "Invalid input. Please enter a number between 0 and 50." << endl;
+        }
+    }
+    else {
+        cout << "Invalid choice. Please select a valid option (A, B, or C)." << endl;
+    }
+
+    return 0;
+}
